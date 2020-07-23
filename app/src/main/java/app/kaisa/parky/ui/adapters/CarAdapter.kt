@@ -26,6 +26,13 @@ class CarAdapter(private val list: ArrayList<Car>) : RecyclerView.Adapter<CarAda
     inner class CarViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun bind(car: Car){
             itemView.tv_car_id.text = car.id.toUpperCase(Locale.ROOT)
+
+            when(car.type){
+                0 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_business_outline) //Oficial
+                1 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_home_outline) //Residentes
+                2 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_people_outline) //Visitantes
+                else -> itemView.iv_car_icon.setImageResource(R.drawable.ic_help_circle_outline) //Otros
+            }
         }
     }
 }

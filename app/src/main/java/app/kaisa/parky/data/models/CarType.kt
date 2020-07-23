@@ -8,4 +8,5 @@ data class CarType(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val name: String,
-    val price: Double)
+    val price: Double,
+    val icon: String)

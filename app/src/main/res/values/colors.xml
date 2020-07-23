@@ -11,4 +11,5 @@
     <color name="white80">#CEFFFFFF</color>
 
     <color name="screen_background">#EDECF2</color>
+    <color name="item_background">#B5AFCA</color>
 </resources>
