@@ -1,3 +1,12 @@
 package app.kaisa.parky.data.models
 
-data class Record(val car: Car, val dateInput: Long, var dateOutput: Long?)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class Record(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val car: Int, //TODO this should be Car
+    val dateInput: Long,
+    var dateOutput: Long?)

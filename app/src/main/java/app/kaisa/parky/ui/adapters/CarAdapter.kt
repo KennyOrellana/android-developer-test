@@ -1,4 +1,4 @@
-package app.kaisa.parky.data.adapters
+package app.kaisa.parky.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View
