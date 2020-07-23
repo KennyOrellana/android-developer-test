@@ -14,9 +14,9 @@ import app.kaisa.parky.R
 import app.kaisa.parky.ui.adapters.CarAdapter
 import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.viewmodel.CarViewModel
-import kotlinx.android.synthetic.main.fragment_inputs.*
+import kotlinx.android.synthetic.main.fragment_outputs.*
 
-class InputsFragment : Fragment(){
+class ResetFragment : Fragment(){
     private var carViewModel: CarViewModel? = null
     private lateinit var adapter: CarAdapter
     private val list = ArrayList<Car>()
@@ -26,12 +26,12 @@ class InputsFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inputs, container, false)
+        return inflater.inflate(R.layout.fragment_reset, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initUI()
+//        initUI()
 //        initData()
     }
 
@@ -57,7 +57,7 @@ class InputsFragment : Fragment(){
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
         recycler_view.adapter = adapter
         carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
-        
+
         //Setup Search
         et_search.addTextChangedListener { query ->
             if(query.isNullOrEmpty()){

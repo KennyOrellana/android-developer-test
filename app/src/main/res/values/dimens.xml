@@ -10,4 +10,7 @@
 <!--    Round UI-->
     <dimen name="corner_radio_normal">16dp</dimen>
     <dimen name="corner_radio_half">8dp</dimen>
+
+<!--    Icons-->
+    <dimen name="icon_tabs">24dp</dimen>
 </resources>

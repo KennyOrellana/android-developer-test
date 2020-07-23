@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/inputs_fragment">
+
+    <fragment
+        android:id="@+id/inputs_fragment"
+        android:name="app.kaisa.parky.ui.InputsFragment"
+        tools:layout="@layout/fragment_inputs" />
+    <fragment
+        android:id="@+id/outputs_fragment"
+        android:name="app.kaisa.parky.ui.OutputsFragment"
+        android:label="fragment_outputs"
+        tools:layout="@layout/fragment_outputs" />
+    <fragment
+        android:id="@+id/car_fragment"
+        android:name="app.kaisa.parky.ui.CarsFragment"
+        android:label="Second Fragment"
+        tools:layout="@layout/fragment_cars" />
+    <fragment
+        android:id="@+id/reset_fragment"
+        android:name="app.kaisa.parky.ui.ResetFragment"
+        android:label="Third Fragment"
+        tools:layout="@layout/fragment_reset" />
+</navigation>

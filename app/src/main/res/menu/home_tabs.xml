@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/inputs_fragment"
+        android:title="Entradas"
+        android:icon="@drawable/ic_arrow_up_outline"/>
+
+    <item
+        android:id="@+id/outputs_fragment"
+        android:title="Salidas"
+        android:icon="@drawable/ic_arrow_down_outline"/>
+
+    <item
+        android:id="@+id/car_fragment"
+        android:title="Vehículos"
+        android:icon="@drawable/ic_car_outline"/>
+
+    <item
+        android:id="@+id/reset_fragment"
+        android:title="Gestionar"
+        android:icon="@drawable/ic_refresh_outline"/>
+<!--    <item-->
+<!--        android:id="@+id/pay_fragment"-->
+<!--        android:title="Pagar"-->
+<!--        android:icon="@drawable/ic_card_outline"/>-->
+
+</menu>
