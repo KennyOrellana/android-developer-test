@@ -36,11 +36,19 @@ class InputsFragment : Fragment(){
     }
 
     private fun initData(){
-        Handler().postDelayed({
-            activity?.runOnUiThread {
-                carViewModel?.addCar(Car("NA1534", 0))
-            }
-        }, 2000)
+//        Handler().postDelayed({
+//            activity?.runOnUiThread {
+//                carViewModel?.addCar(Car("NA1534", 0))
+//                carViewModel?.addCar(Car("FA1534", 0))
+//                carViewModel?.addCar(Car("HA1534", 0))
+//                carViewModel?.addCar(Car("N5432", 1))
+//                carViewModel?.addCar(Car("JH33434", 2))
+//                carViewModel?.addCar(Car("M5678", 1))
+//                carViewModel?.addCar(Car("LK9834", 2))
+//                carViewModel?.addCar(Car("jh4242", 1))
+//                carViewModel?.addCar(Car("jg424", 2))
+//            }
+//        }, 2000)
     }
 
     private fun initUI(){
@@ -49,8 +57,6 @@ class InputsFragment : Fragment(){
 
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
 
-//        carViewModel?.addCar(Car("FAA2323", 0))
-        //Revisar como agregar elementos a la DB
 
         carViewModel?.getCars()?.observe(viewLifecycleOwner, Observer {
             list.clear()
