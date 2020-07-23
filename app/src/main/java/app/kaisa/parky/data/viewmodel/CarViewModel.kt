@@ -11,6 +11,8 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getCars() = repository.getCars()
 
+    fun searchCars(plate: String) = repository.searchCars(plate)
+
     fun addCar(car: Car) {
         repository.addCar(car)
     }

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    Spacing, Margin and Padding-->
     <dimen name="spacing_normal">16dp</dimen>
     <dimen name="spacing_l">32dp</dimen>
     <dimen name="spacing_xl">64dp</dimen>
     <dimen name="spacing_half">8dp</dimen>
     <dimen name="spacing_min">4dp</dimen>
+
+<!--    Round UI-->
+    <dimen name="corner_radio_normal">16dp</dimen>
+    <dimen name="corner_radio_half">8dp</dimen>
 </resources>

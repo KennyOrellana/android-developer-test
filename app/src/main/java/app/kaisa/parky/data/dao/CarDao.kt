@@ -16,6 +16,9 @@ interface CarDao {
     @Update
     fun updateCar(car: Car)
 
-    @Query("SELECT * from car ORDER BY id ASC")
+    @Query("SELECT * FROM car ORDER BY id ASC")
     fun getCars() : LiveData<List<Car>>
+
+    @Query("SELECT * FROM car WHERE id LIKE :plate || '%' ORDER BY id ASC")
+    fun searchCar(plate: String) : LiveData<List<Car>>
 }

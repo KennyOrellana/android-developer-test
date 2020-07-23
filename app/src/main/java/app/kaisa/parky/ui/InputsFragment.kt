@@ -5,10 +5,10 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.kaisa.parky.R
 import app.kaisa.parky.ui.adapters.CarAdapter
@@ -32,7 +32,7 @@ class InputsFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
-        initData()
+//        initData()
     }
 
     private fun initData(){
@@ -54,16 +54,23 @@ class InputsFragment : Fragment(){
     private fun initUI(){
         recycler_view.layoutManager = LinearLayoutManager(context)
         adapter = CarAdapter(list)
-
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
-
-
-        carViewModel?.getCars()?.observe(viewLifecycleOwner, Observer {
-            list.clear()
-            list.addAll(it)
-            adapter.notifyDataSetChanged()
-        })
-
         recycler_view.adapter = adapter
+        carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
+        
+        //Setup Search
+        et_search.addTextChangedListener { query ->
+            if(query.isNullOrEmpty()){
+                carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver)
+            } else {
+                carViewModel?.searchCars(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
+            }
+        }
+    }
+
+    private val showCarsObserver = Observer<List<Car>> {
+        list.clear()
+        list.addAll(it)
+        adapter.notifyDataSetChanged()
     }
 }

@@ -30,6 +30,8 @@ class ParkyRepository (application: Application) : CoroutineScope {
 
     fun getCars() = carDao?.getCars()
 
+    fun searchCars(plate: String) = carDao?.searchCar(plate)
+
     fun addCar(car: Car){
         launch { addCarBG(car) }
     }
