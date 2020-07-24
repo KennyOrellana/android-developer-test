@@ -43,7 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_half"
             android:background="@null"
-            android:textAllCaps="true"
             android:hint="@string/search" />
     </LinearLayout>
 

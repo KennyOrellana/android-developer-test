@@ -7,6 +7,7 @@ import app.kaisa.parky.data.dao.CarTypeDao
 import app.kaisa.parky.data.dao.RecordDao
 import app.kaisa.parky.data.db.ParkyDatabase
 import app.kaisa.parky.data.models.Car
+import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.models.CarType
 import app.kaisa.parky.data.models.Record
 import kotlinx.coroutines.CoroutineScope
@@ -35,6 +36,7 @@ class ParkyRepository (application: Application) : CoroutineScope {
     fun getCarsWithInputs() = carDao?.getCarsWithInputs()
     fun getCarsWithoutInputs() = carDao?.getCarsWithoutInputs()
 
+    //Search
     fun searchCars(plate: String? = null, filters: List<CarType>? = null) : LiveData<List<Car>>? {
         return when {
             plate?.isNotEmpty() == true && filters != null -> {
@@ -47,6 +49,42 @@ class ParkyRepository (application: Application) : CoroutineScope {
 
             filters != null -> {
                 carDao?.searchCar(filters.map { it.idType })
+            }
+
+            else -> null
+        }
+    }
+
+    fun searchCarsWithInputs(plate: String? = null, filters: List<CarType>? = null) : LiveData<List<CarRecord>>? {
+        return when {
+            plate?.isNotEmpty() == true && filters != null -> {
+                carDao?.searchCarsWithInputs(plate, filters.map { it.idType })
+            }
+
+            plate?.isNotEmpty() == true -> {
+                return carDao?.searchCarsWithInputs(plate)
+            }
+
+            filters != null -> {
+                carDao?.searchCarsWithInputs(filters.map { it.idType })
+            }
+
+            else -> null
+        }
+    }
+
+    fun searchCarsWithoutInputs(plate: String? = null, filters: List<CarType>? = null) : LiveData<List<CarRecord>>? {
+        return when {
+            plate?.isNotEmpty() == true && filters != null -> {
+                carDao?.searchCarsWithoutInputs(plate, filters.map { it.idType })
+            }
+
+            plate?.isNotEmpty() == true -> {
+                return carDao?.searchCarsWithoutInputs(plate)
+            }
+
+            filters != null -> {
+                carDao?.searchCarsWithoutInputs(filters.map { it.idType })
             }
 
             else -> null

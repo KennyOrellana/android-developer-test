@@ -54,7 +54,7 @@ class InputsFragment : Fragment(){
             if(query.isNullOrEmpty()){
                 carViewModel?.getCarsWithoutInputs()?.observe(viewLifecycleOwner, showCarsObserver)
             } else {
-//                carViewModel?.searchCars(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
+                carViewModel?.searchCarsWithoutInputs(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
             }
         }
 

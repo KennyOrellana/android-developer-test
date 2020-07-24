@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_outputs.*
 
 class OutputsFragment : Fragment(){
     private var carViewModel: CarViewModel? = null
-    private lateinit var adapterInputs: OutputsCarAdapter
+    private lateinit var adapterOutputs: OutputsCarAdapter
     private val list = ArrayList<CarRecord>()
 
     override fun onCreateView(
@@ -42,9 +42,9 @@ class OutputsFragment : Fragment(){
         }
 
         recycler_view.layoutManager = LinearLayoutManager(context)
-        adapterInputs = OutputsCarAdapter(list, onClickListener)
+        adapterOutputs = OutputsCarAdapter(list, onClickListener)
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
-        recycler_view.adapter = adapterInputs
+        recycler_view.adapter = adapterOutputs
         carViewModel?.getCarsWithInputs()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
 
         //Setup Search
@@ -52,7 +52,7 @@ class OutputsFragment : Fragment(){
             if(query.isNullOrEmpty()){
                 carViewModel?.getCarsWithInputs()?.observe(viewLifecycleOwner, showCarsObserver)
             } else {
-//                carViewModel?.searchCars(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
+                carViewModel?.searchCarsWithInputs(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
             }
         }
     }
@@ -60,6 +60,6 @@ class OutputsFragment : Fragment(){
     private val showCarsObserver = Observer<List<CarRecord>> {
         list.clear()
         list.addAll(it)
-        adapterInputs.notifyDataSetChanged()
+        adapterOutputs.notifyDataSetChanged()
     }
 }

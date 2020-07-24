@@ -20,17 +20,17 @@ interface CarDao {
     @Update
     fun updateCar(car: Car)
 
+    //Get
     @Query("SELECT * FROM car ORDER BY idCar ASC")
     fun getCars() : LiveData<List<Car>>
 
-//    @Query("SELECT car.id, car.minutes, car.type, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.id = record.car ORDER BY car.id ASC")
     @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.idCar = record.carId ORDER BY car.idCar ASC")
     fun getCarsWithInputs() : LiveData<List<CarRecord>>
 
-//    @Query("SELECT car.idCar, car.minutes, car.type, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.car WHERE record.car IS NULL ORDER BY car.idCar ASC")
     @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.carId WHERE record.carId IS NULL ORDER BY car.idCar ASC")
     fun getCarsWithoutInputs() : LiveData<List<CarRecord>>
 
+    //Search WITH Inputs (Car will exit)
     @Query("SELECT * FROM car WHERE idCar LIKE :plate || '%' ORDER BY idCar ASC")
     fun searchCar(plate: String) : LiveData<List<Car>>
 
@@ -39,4 +39,24 @@ interface CarDao {
 
     @Query("SELECT * FROM car WHERE idCar LIKE :plate || '%' AND type IN (:type) ORDER BY idCar ASC")
     fun searchCar(plate: String, type: List<Int>) : LiveData<List<Car>>
+
+    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.idCar = record.carId WHERE idCar LIKE :plate || '%' ORDER BY car.idCar ASC")
+    fun searchCarsWithInputs(plate: String) : LiveData<List<CarRecord>>
+
+    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.idCar = record.carId WHERE type IN (:type) ORDER BY car.idCar ASC")
+    fun searchCarsWithInputs(type: List<Int>) : LiveData<List<CarRecord>>
+
+    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.idCar = record.carId WHERE idCar LIKE :plate || '%' AND type IN (:type) ORDER BY car.idCar ASC")
+    fun searchCarsWithInputs(plate: String, type: List<Int>) : LiveData<List<CarRecord>>
+
+    //Search WITHOUT Inputs (Car will enter)
+    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.carId WHERE (record.carId IS NULL AND idCar LIKE :plate || '%') ORDER BY car.idCar ASC")
+    fun searchCarsWithoutInputs(plate: String) : LiveData<List<CarRecord>>
+
+    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.carId WHERE (record.carId IS NULL AND type IN (:type)) ORDER BY car.idCar ASC")
+    fun searchCarsWithoutInputs(type: List<Int>) : LiveData<List<CarRecord>>
+
+    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.carId WHERE (record.carId IS NULL AND idCar LIKE :plate || '%' AND type IN (:type)) ORDER BY car.idCar ASC")
+    fun searchCarsWithoutInputs(plate: String, type: List<Int>) : LiveData<List<CarRecord>>
+
 }
