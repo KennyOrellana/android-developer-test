@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class Record(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val car: String, //TODO this should be Car
+    val idRecord: Int,
+    val carId: String, //TODO this should be Car
     val dateInput: Long,
     var dateOutput: Long?) {
 

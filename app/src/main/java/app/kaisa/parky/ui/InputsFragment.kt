@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import app.kaisa.parky.R
 import app.kaisa.parky.ui.adapters.InputsCarAdapter
 import app.kaisa.parky.data.models.Car
+import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.viewmodel.CarViewModel
 import kotlinx.android.synthetic.main.fragment_inputs.*
 
 class InputsFragment : Fragment(){
     private var carViewModel: CarViewModel? = null
     private lateinit var adapterInputs: InputsCarAdapter
-    private val list = ArrayList<Car>()
+    private val list = ArrayList<CarRecord>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +54,7 @@ class InputsFragment : Fragment(){
             if(query.isNullOrEmpty()){
                 carViewModel?.getCarsWithoutInputs()?.observe(viewLifecycleOwner, showCarsObserver)
             } else {
-                carViewModel?.searchCars(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
+//                carViewModel?.searchCars(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
             }
         }
 
@@ -63,7 +64,7 @@ class InputsFragment : Fragment(){
         }
     }
 
-    private val showCarsObserver = Observer<List<Car>> {
+    private val showCarsObserver = Observer<List<CarRecord>> {
         list.clear()
         list.addAll(it)
         adapterInputs.notifyDataSetChanged()

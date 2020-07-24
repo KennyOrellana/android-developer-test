@@ -25,7 +25,7 @@ class CarsAdapter(private val list: ArrayList<Car>) : RecyclerView.Adapter<CarsA
 
     inner class CarViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun bind(car: Car){
-            itemView.tv_car_id.text = car.id.toUpperCase(Locale.ROOT)
+            itemView.tv_car_id.text = car.idCar.toUpperCase(Locale.ROOT)
 
             when(car.type){
                 0 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_business_outline) //Oficial

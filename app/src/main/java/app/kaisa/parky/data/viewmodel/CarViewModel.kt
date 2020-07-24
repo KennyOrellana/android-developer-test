@@ -24,5 +24,5 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
     fun insertCarTypes(cardTypes: List<CarType>) = repository.insertCarTypes(cardTypes)
 
     //Records
-    fun insertRecord(car: Car) = repository.insertRecord(car.id)
+    fun insertRecord(car: Car) = repository.insertRecord(car.idCar)
 }
