@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_inputs_car.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CarAdapter(private val list: ArrayList<Car>) : RecyclerView.Adapter<CarAdapter.CarViewHolder>() {
+class InputsCarAdapter(private val list: ArrayList<Car>) : RecyclerView.Adapter<InputsCarAdapter.CarViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
         return CarViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_inputs_car, parent, false))
     }

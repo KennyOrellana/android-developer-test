@@ -10,16 +10,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
-import app.kaisa.parky.ui.adapters.CarAdapter
 import app.kaisa.parky.data.models.Car
+import app.kaisa.parky.data.models.CarType
 import app.kaisa.parky.data.viewmodel.CarViewModel
-import kotlinx.android.synthetic.main.fragment_outputs.*
+import app.kaisa.parky.ui.adapters.CarsAdapter
+import app.kaisa.parky.ui.adapters.FiltersAdapter
+import app.kaisa.parky.ui.utils.VerticalDivider
+import kotlinx.android.synthetic.main.fragment_cars.*
+import kotlinx.android.synthetic.main.fragment_outputs.et_search
+import kotlinx.android.synthetic.main.fragment_outputs.recycler_view
+
 
 class CarsFragment : Fragment(){
     private var carViewModel: CarViewModel? = null
-    private lateinit var adapter: CarAdapter
-    private val list = ArrayList<Car>()
+    private lateinit var adapterInputs: CarsAdapter
+    private val listCars = ArrayList<Car>()
+    private lateinit var adapterFilters: FiltersAdapter
+    private val listFilters = ArrayList<CarType>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +40,7 @@ class CarsFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        initUI()
+        initUI()
 //        initData()
     }
 
@@ -52,11 +61,27 @@ class CarsFragment : Fragment(){
     }
 
     private fun initUI(){
+        //Cars RecyclerView
         recycler_view.layoutManager = LinearLayoutManager(context)
-        adapter = CarAdapter(list)
+        recycler_view.addItemDecoration(VerticalDivider(context))
+        adapterInputs = CarsAdapter(listCars)
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
-        recycler_view.adapter = adapter
+        recycler_view.adapter = adapterInputs
         carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
+
+        //Filters RecyclerView
+        listFilters.addAll(
+            listOf(
+                CarType(0, "Oficial",0.0, ""),
+                CarType(1, "Residente Temporal",0.05, ""),
+                CarType(2, "Visita",0.5, "")
+            )
+        )
+        rv_filter.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        adapterFilters = FiltersAdapter(listFilters)
+//        carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
+        rv_filter.adapter = adapterFilters
+//        carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
 
         //Setup Search
         et_search.addTextChangedListener { query ->
@@ -69,8 +94,8 @@ class CarsFragment : Fragment(){
     }
 
     private val showCarsObserver = Observer<List<Car>> {
-        list.clear()
-        list.addAll(it)
-        adapter.notifyDataSetChanged()
+        listCars.clear()
+        listCars.addAll(it)
+        adapterInputs.notifyDataSetChanged()
     }
 }

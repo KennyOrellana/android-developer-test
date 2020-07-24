@@ -11,14 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.kaisa.parky.R
-import app.kaisa.parky.ui.adapters.CarAdapter
+import app.kaisa.parky.ui.adapters.InputsCarAdapter
 import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.viewmodel.CarViewModel
 import kotlinx.android.synthetic.main.fragment_outputs.*
 
 class ResetFragment : Fragment(){
     private var carViewModel: CarViewModel? = null
-    private lateinit var adapter: CarAdapter
+    private lateinit var adapterInputs: InputsCarAdapter
     private val list = ArrayList<Car>()
 
     override fun onCreateView(
@@ -53,9 +53,9 @@ class ResetFragment : Fragment(){
 
     private fun initUI(){
         recycler_view.layoutManager = LinearLayoutManager(context)
-        adapter = CarAdapter(list)
+        adapterInputs = InputsCarAdapter(list)
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
-        recycler_view.adapter = adapter
+        recycler_view.adapter = adapterInputs
         carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
 
         //Setup Search
@@ -71,6 +71,6 @@ class ResetFragment : Fragment(){
     private val showCarsObserver = Observer<List<Car>> {
         list.clear()
         list.addAll(it)
-        adapter.notifyDataSetChanged()
+        adapterInputs.notifyDataSetChanged()
     }
 }

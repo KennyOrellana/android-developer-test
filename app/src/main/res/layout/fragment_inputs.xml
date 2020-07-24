@@ -10,7 +10,7 @@
         style="@style/MainTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Entradas"
+        android:text="@string/title_inputs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_half"
             android:background="@null"
-            android:hint="Buscar" />
+            android:hint="@string/search" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,7 +68,7 @@
 
         <TextView
             android:id="@+id/tv_add"
-            android:text="Registrar entrada de no residente"
+            android:text="@string/register_non_resident"
             android:textColor="@color/text_secondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
