@@ -19,6 +19,6 @@ interface CarTypeDao {
     @Update
     fun updateCarType(carType: CarType)
 
-    @Query("SELECT * FROM cartype ORDER BY id ASC")
+    @Query("SELECT * FROM cartype ORDER BY idType ASC")
     fun getCarTypes() : LiveData<List<CarType>>
 }

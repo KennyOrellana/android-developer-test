@@ -38,7 +38,7 @@ class ParkyRepository (application: Application) : CoroutineScope {
     fun searchCars(plate: String? = null, filters: List<CarType>? = null) : LiveData<List<Car>>? {
         return when {
             plate?.isNotEmpty() == true && filters != null -> {
-                carDao?.searchCar(plate, filters.map { it.id })
+                carDao?.searchCar(plate, filters.map { it.idType })
             }
 
             plate?.isNotEmpty() == true -> {
@@ -46,7 +46,7 @@ class ParkyRepository (application: Application) : CoroutineScope {
             }
 
             filters != null -> {
-                carDao?.searchCar(filters.map { it.id })
+                carDao?.searchCar(filters.map { it.idType })
             }
 
             else -> null
