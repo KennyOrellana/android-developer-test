@@ -10,11 +10,14 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
 
     private var repository: ParkyRepository = ParkyRepository(application)
 
+    //Cars
     fun getCars() = repository.getCars()
 
     fun searchCars(plate: String? = null, filters: List<CarType>? = null) = repository.searchCars(plate, filters)
 
-    fun addCar(car: Car) {
-        repository.addCar(car)
-    }
+    fun addCar(car: Car) { repository.addCar(car) }
+
+    //Car Type
+    fun getCarTypes() = repository.getCarTypes()
+    fun insertCarTypes(cardTypes: List<CarType>) = repository.insertCarTypes(cardTypes)
 }

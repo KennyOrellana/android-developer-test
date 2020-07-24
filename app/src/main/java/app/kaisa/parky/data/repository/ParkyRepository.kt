@@ -60,4 +60,14 @@ class ParkyRepository (application: Application) : CoroutineScope {
             carDao?.insertCar(car)
         }
     }
+
+    //Car Types
+    fun getCarTypes() = carTypeDao?.getCarTypes()
+    fun insertCarTypes(cardTypes: List<CarType>) = launch { addCarTypesBG(cardTypes) }
+
+    private suspend fun addCarTypesBG(cardTypes: List<CarType>){
+        withContext(Dispatchers.IO){
+            carTypeDao?.insertCarTypes(cardTypes)
+        }
+    }
 }

@@ -73,18 +73,15 @@ class CarsFragment : Fragment(){
                 carViewModel?.searchCars(et_search.text.toString(), listFilters.filter { it.isChecked })?.observe(viewLifecycleOwner, showCarsObserver)
             }
         }
-        listFilters.addAll(
-            listOf(
-                CarType(0, "Oficial",0.0, ""),
-                CarType(1, "Residente Temporal",0.05, ""),
-                CarType(2, "Visita",0.5, "")
-            )
-        )
+
         rv_filter.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         adapterFilters = FiltersAdapter(listFilters, onCheckedListener)
-//        carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
         rv_filter.adapter = adapterFilters
-//        carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
+        carViewModel?.getCarTypes()?.observe(viewLifecycleOwner, Observer {
+            listFilters.clear()
+            listFilters.addAll(it)
+            adapterFilters.notifyDataSetChanged()
+        })
 
         //Setup Search
         et_search.addTextChangedListener { query ->
