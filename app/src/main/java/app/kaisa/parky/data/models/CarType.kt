@@ -1,6 +1,7 @@
 package app.kaisa.parky.data.models
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity
@@ -9,4 +10,6 @@ data class CarType(
     val id: Int,
     val name: String,
     val price: Double,
-    val icon: String)
+    val icon: String) {
+    @Ignore var isChecked: Boolean = true
+}

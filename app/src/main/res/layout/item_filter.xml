@@ -7,6 +7,5 @@
     style="@style/FilterToggle"
     android:layout_width="wrap_content"
     android:layout_height="32dp"
-    android:layout_marginHorizontal="@dimen/spacing_min"
-    android:checked="true">
+    android:layout_marginHorizontal="@dimen/spacing_min">
 </ToggleButton>

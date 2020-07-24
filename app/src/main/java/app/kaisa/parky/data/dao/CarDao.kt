@@ -21,4 +21,10 @@ interface CarDao {
 
     @Query("SELECT * FROM car WHERE id LIKE :plate || '%' ORDER BY id ASC")
     fun searchCar(plate: String) : LiveData<List<Car>>
+
+    @Query("SELECT * FROM car WHERE type IN (:type) ORDER BY id ASC")
+    fun searchCar(type: List<Int>) : LiveData<List<Car>>
+
+    @Query("SELECT * FROM car WHERE id LIKE :plate || '%' AND type IN (:type) ORDER BY id ASC")
+    fun searchCar(plate: String, type: List<Int>) : LiveData<List<Car>>
 }

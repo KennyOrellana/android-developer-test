@@ -19,8 +19,6 @@ import app.kaisa.parky.ui.adapters.CarsAdapter
 import app.kaisa.parky.ui.adapters.FiltersAdapter
 import app.kaisa.parky.ui.utils.VerticalDivider
 import kotlinx.android.synthetic.main.fragment_cars.*
-import kotlinx.android.synthetic.main.fragment_outputs.et_search
-import kotlinx.android.synthetic.main.fragment_outputs.recycler_view
 
 
 class CarsFragment : Fragment(){
@@ -70,6 +68,11 @@ class CarsFragment : Fragment(){
         carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
 
         //Filters RecyclerView
+        val onCheckedListener = object : FiltersAdapter.OnFiltersChange {
+            override fun callback() {
+                carViewModel?.searchCars(et_search.text.toString(), listFilters.filter { it.isChecked })?.observe(viewLifecycleOwner, showCarsObserver)
+            }
+        }
         listFilters.addAll(
             listOf(
                 CarType(0, "Oficial",0.0, ""),
@@ -78,7 +81,7 @@ class CarsFragment : Fragment(){
             )
         )
         rv_filter.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        adapterFilters = FiltersAdapter(listFilters)
+        adapterFilters = FiltersAdapter(listFilters, onCheckedListener)
 //        carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
         rv_filter.adapter = adapterFilters
 //        carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
@@ -86,9 +89,14 @@ class CarsFragment : Fragment(){
         //Setup Search
         et_search.addTextChangedListener { query ->
             if(query.isNullOrEmpty()){
-                carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver)
+                carViewModel?.searchCars(
+                    filters = listFilters.filter { it.isChecked }
+                )?.observe(viewLifecycleOwner, showCarsObserver)
             } else {
-                carViewModel?.searchCars(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
+                carViewModel?.searchCars(
+                    query.toString(),
+                    listFilters.filter { it.isChecked }
+                )?.observe(viewLifecycleOwner, showCarsObserver)
             }
         }
     }

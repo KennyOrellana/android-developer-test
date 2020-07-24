@@ -9,7 +9,7 @@ import app.kaisa.parky.data.models.CarType
 import kotlinx.android.synthetic.main.item_filter.view.*
 import kotlin.collections.ArrayList
 
-class FiltersAdapter(private val list: ArrayList<CarType>) : RecyclerView.Adapter<FiltersAdapter.CarTypeViewHolder>() {
+class FiltersAdapter(private val list: ArrayList<CarType>, private val onChange: OnFiltersChange) : RecyclerView.Adapter<FiltersAdapter.CarTypeViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarTypeViewHolder {
         return CarTypeViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_filter, parent, false))
     }
@@ -27,6 +27,16 @@ class FiltersAdapter(private val list: ArrayList<CarType>) : RecyclerView.Adapte
             itemView.toggle_filter.text = carType.name
             itemView.toggle_filter.textOn = carType.name
             itemView.toggle_filter.textOff = carType.name
+            itemView.toggle_filter.isChecked = carType.isChecked
+
+            itemView.toggle_filter.setOnCheckedChangeListener{ _ , isChecked ->
+                carType.isChecked = isChecked
+                onChange.callback()
+            }
         }
+    }
+
+    interface OnFiltersChange{
+        fun callback()
     }
 }

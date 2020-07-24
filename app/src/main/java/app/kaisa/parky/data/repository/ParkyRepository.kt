@@ -1,11 +1,13 @@
 package app.kaisa.parky.data.repository
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import app.kaisa.parky.data.dao.CarDao
 import app.kaisa.parky.data.dao.CarTypeDao
 import app.kaisa.parky.data.dao.RecordDao
 import app.kaisa.parky.data.db.ParkyDatabase
 import app.kaisa.parky.data.models.Car
+import app.kaisa.parky.data.models.CarType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +32,23 @@ class ParkyRepository (application: Application) : CoroutineScope {
 
     fun getCars() = carDao?.getCars()
 
-    fun searchCars(plate: String) = carDao?.searchCar(plate)
+    fun searchCars(plate: String? = null, filters: List<CarType>? = null) : LiveData<List<Car>>? {
+        return when {
+            plate?.isNotEmpty() == true && filters != null -> {
+                carDao?.searchCar(plate, filters.map { it.id })
+            }
+
+            plate?.isNotEmpty() == true -> {
+                return carDao?.searchCar(plate)
+            }
+
+            filters != null -> {
+                carDao?.searchCar(filters.map { it.id })
+            }
+
+            else -> null
+        }
+    }
 
     fun addCar(car: Car){
         launch { addCarBG(car) }
