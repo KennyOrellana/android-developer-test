@@ -28,7 +28,8 @@ class OutputsCarAdapter(private val list: ArrayList<CarRecord>, private val carL
     inner class CarViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun bind(item: CarRecord){
             itemView.tv_car_id.text = item.car.idCar.toUpperCase(Locale.ROOT)
-            itemView.tv_value_1.text = "Entró ${DateTime.millisToDate(item)}"
+            val inputDate = "Entró ${DateTime.millisToDate(item)}"
+            itemView.tv_value_1.text = inputDate
             itemView.tv_value_2.text = DateTime.elapsedTime(item)
             itemView.tv_value_3.text = DateTime.calculateAmount(item)
 

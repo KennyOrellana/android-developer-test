@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
 import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
+import app.kaisa.parky.data.repository.CarTypeSingleton
+import app.kaisa.parky.utils.DateTime
 import kotlinx.android.synthetic.main.item_inputs_car.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,7 +29,13 @@ class InputsCarAdapter(private val list: ArrayList<CarRecord>, private val carLi
     inner class CarViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun bind(item: CarRecord){
             itemView.tv_car_id.text = item.car.idCar.toUpperCase(Locale.ROOT)
-//            itemView.tv_minutes.text = DateTime.formatMinutes(item.car.minutes)
+
+            val cost = CarTypeSingleton.getPrice(item.car.type)
+            if(cost!=null) {
+                itemView.tv_value_1.text = "Tarifa ${DateTime.doubleToMoney(cost)}"
+            }
+            itemView.tv_value_2.text = DateTime.elapsedTime(item)
+            itemView.tv_value_3.text = DateTime.currentDebt(item)
 
             when(item.car.type){
                 0 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_business_outline) //Oficial

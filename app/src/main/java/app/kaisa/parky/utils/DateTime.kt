@@ -11,9 +11,10 @@ object DateTime {
         val hours: Int = time / 60
         val minutes: Int = time % 60
         return when {
-            hours == 0 && (minutes == 0 ||  minutes == 1) -> "1 m"
-            hours == 0 -> "$minutes m"
-            else -> String.format("%dh %02dm", hours, minutes)
+            hours == 0 && (minutes == 0 ||  minutes == 1) -> "1 minuto"
+            hours == 0 -> "$minutes minutos"
+            hours == 1 -> String.format("%d hora %02d minutos", hours, minutes)
+            else -> String.format("%d horas %02d minutos", hours, minutes)
         }
     }
 
@@ -51,6 +52,15 @@ object DateTime {
             if(date > 0 && cost!=null) {
                 return doubleToMoney(millisToMinutes(System.currentTimeMillis() - date) * cost)
             }
+        }
+
+        return ""
+    }
+
+    fun currentDebt(carRecord: CarRecord) : String {
+        val cost = CarTypeSingleton.getPrice(carRecord.car.type)
+        if(cost!=null) {
+            return doubleToMoney(carRecord.car.minutes * cost)
         }
 
         return ""
