@@ -1,6 +1,7 @@
 package app.kaisa.parky.data.repository
 
 import android.app.Application
+import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
 import app.kaisa.parky.data.dao.CarDao
 import app.kaisa.parky.data.dao.CarTypeDao
@@ -10,6 +11,7 @@ import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.models.CarType
 import app.kaisa.parky.data.models.Record
+import app.kaisa.parky.utils.DateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,6 +34,8 @@ class ParkyRepository (application: Application) : CoroutineScope {
         recordDao = db.recordDao()
     }
 
+    //Cars
+    fun updateCars(car: Car) = carDao?.updateCar(car)
     fun getCars() = carDao?.getCars()
     fun getCarsWithInputs() = carDao?.getCarsWithInputs()
     fun getCarsWithoutInputs() = carDao?.getCarsWithoutInputs()
@@ -117,6 +121,28 @@ class ParkyRepository (application: Application) : CoroutineScope {
         launch {
             withContext(Dispatchers.IO) {
                 recordDao?.insertRecord(Record(carId))
+            }
+        }
+    }
+
+    fun updateRecord(record: Record) {
+        recordDao?.updateRecord(record)
+    }
+
+    //Checkout Car/Record
+    fun checkoutCar(carRecord: CarRecord){
+        launch {
+            val record = carRecord.record
+            record?.dateOutput = System.currentTimeMillis()
+
+            val car = carRecord.car
+            car.addMinutes(DateTime.elapsedMinutes(record))
+
+            withContext(Dispatchers.IO) {
+                updateCars(car)
+                if (record != null) {
+                    updateRecord(record)
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
 import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
+import app.kaisa.parky.utils.CarListener
 import app.kaisa.parky.utils.DateTime
 import kotlinx.android.synthetic.main.item_inputs_car.view.*
 import java.util.*
@@ -41,12 +42,8 @@ class OutputsCarAdapter(private val list: ArrayList<CarRecord>, private val carL
             }
 
             itemView.setOnClickListener{
-                carListener.onClick(item.car)
+                carListener.onClick(item)
             }
         }
-    }
-
-    interface CarListener {
-        fun onClick(car: Car)
     }
 }

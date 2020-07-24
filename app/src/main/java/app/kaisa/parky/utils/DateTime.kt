@@ -1,6 +1,7 @@
 package app.kaisa.parky.utils
 
 import app.kaisa.parky.data.models.CarRecord
+import app.kaisa.parky.data.models.Record
 import app.kaisa.parky.data.repository.CarTypeSingleton
 import java.text.DateFormat
 import java.text.NumberFormat
@@ -11,7 +12,8 @@ object DateTime {
         val hours: Int = time / 60
         val minutes: Int = time % 60
         return when {
-            hours == 0 && (minutes == 0 ||  minutes == 1) -> "1 minuto"
+            hours == 0 && minutes == 0 -> ""
+            hours == 0 && minutes == 1 -> "1 minuto"
             hours == 0 -> "$minutes minutos"
             hours == 1 -> String.format("%d hora %02d minutos", hours, minutes)
             else -> String.format("%d horas %02d minutos", hours, minutes)
@@ -36,14 +38,18 @@ object DateTime {
         return ""
     }
 
-    fun elapsedTime(carRecord: CarRecord) : String {
-        carRecord.record?.dateInput?.let {
+    fun elapsedMinutes(record: Record?) : Int {
+        record?.dateInput?.let {
             if(it > 0) {
-                return formatMinutes(millisToMinutes(System.currentTimeMillis() - it))
+                return millisToMinutes(System.currentTimeMillis() - it)
             }
         }
-        
-        return ""
+
+        return 0
+    }
+
+    fun elapsedTime(carRecord: CarRecord) : String {
+        return formatMinutes(elapsedMinutes(carRecord.record))
     }
 
     fun calculateAmount(carRecord: CarRecord) : String {

@@ -14,6 +14,7 @@ import app.kaisa.parky.ui.adapters.InputsCarAdapter
 import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.viewmodel.CarViewModel
+import app.kaisa.parky.utils.CarListener
 import kotlinx.android.synthetic.main.fragment_inputs.*
 
 class InputsFragment : Fragment(){
@@ -37,9 +38,9 @@ class InputsFragment : Fragment(){
     private fun initUI(){
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
 
-        val onClickListener = object : InputsCarAdapter.CarListener {
-            override fun onClick(car: Car) {
-                carViewModel?.insertRecord(car)
+        val onClickListener = object : CarListener {
+            override fun onClick(carRecord: CarRecord) {
+                carViewModel?.insertRecord(carRecord.car)
             }
         }
 

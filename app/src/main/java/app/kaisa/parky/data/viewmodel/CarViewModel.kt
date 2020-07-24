@@ -3,6 +3,7 @@ package app.kaisa.parky.data.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import app.kaisa.parky.data.models.Car
+import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.models.CarType
 import app.kaisa.parky.data.repository.ParkyRepository
 
@@ -28,4 +29,7 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
 
     //Records
     fun insertRecord(car: Car) = repository.insertRecord(car.idCar)
+
+    //Checkout
+    fun checkoutCar(carRecord: CarRecord) = repository.checkoutCar(carRecord)
 }
