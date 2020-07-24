@@ -41,6 +41,7 @@ abstract class ParkyDatabase : RoomDatabase(){
 
                             Executors.newSingleThreadExecutor().execute {
                                 getDB(context).carTypeDao().insertCarTypes(PREPOPULATE_DATA_CAR_TYPE)
+                                getDB(context).carDao().insertCars(PREPOPULATE_DATA_CAR)
                             }
                         }
                     })
@@ -55,6 +56,18 @@ abstract class ParkyDatabase : RoomDatabase(){
             CarType(1, "Oficial",0.0, ""),
             CarType(2, "Residente",0.05, ""),
             CarType(3, "Visitante",0.5, "")
+        )
+
+        private val PREPOPULATE_DATA_CAR = listOf(
+            Car("NA1534", 0),
+            Car("FA1534", 0),
+            Car("HA1534", 0),
+            Car("N5432", 1),
+            Car("JH33434", 2),
+            Car("M5678", 1),
+            Car("LK9834", 2),
+            Car("jh4242", 1),
+            Car("jg424", 2)
         )
     }
 }

@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey
 data class Record(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val car: Int, //TODO this should be Car
+    val car: String, //TODO this should be Car
     val dateInput: Long,
-    var dateOutput: Long?)
+    var dateOutput: Long?) {
+
+    constructor(car: String) : this(0, car, System.currentTimeMillis(), null)
+}

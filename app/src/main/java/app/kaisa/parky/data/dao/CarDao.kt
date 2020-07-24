@@ -10,6 +10,9 @@ interface CarDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCar(car: Car)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCars(cars: List<Car>)
+
     @Delete
     fun deleteCar(car: Car)
 
@@ -18,6 +21,12 @@ interface CarDao {
 
     @Query("SELECT * FROM car ORDER BY id ASC")
     fun getCars() : LiveData<List<Car>>
+
+    @Query("SELECT car.id, car.minutes, car.type, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.id = record.car ORDER BY car.id ASC")
+    fun getCarsWithInputs() : LiveData<List<Car>>
+
+    @Query("SELECT car.id, car.minutes, car.type, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.id = record.car WHERE record.car IS NULL ORDER BY car.id ASC")
+    fun getCarsWithoutInputs() : LiveData<List<Car>>
 
     @Query("SELECT * FROM car WHERE id LIKE :plate || '%' ORDER BY id ASC")
     fun searchCar(plate: String) : LiveData<List<Car>>

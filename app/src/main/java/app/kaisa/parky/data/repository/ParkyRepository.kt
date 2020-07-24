@@ -8,6 +8,7 @@ import app.kaisa.parky.data.dao.RecordDao
 import app.kaisa.parky.data.db.ParkyDatabase
 import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarType
+import app.kaisa.parky.data.models.Record
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,6 +32,8 @@ class ParkyRepository (application: Application) : CoroutineScope {
     }
 
     fun getCars() = carDao?.getCars()
+    fun getCarsWithInputs() = carDao?.getCarsWithInputs()
+    fun getCarsWithoutInputs() = carDao?.getCarsWithoutInputs()
 
     fun searchCars(plate: String? = null, filters: List<CarType>? = null) : LiveData<List<Car>>? {
         return when {
@@ -68,6 +71,15 @@ class ParkyRepository (application: Application) : CoroutineScope {
     private suspend fun addCarTypesBG(cardTypes: List<CarType>){
         withContext(Dispatchers.IO){
             carTypeDao?.insertCarTypes(cardTypes)
+        }
+    }
+
+    //Records
+    fun insertRecord(carId: String) {
+        launch {
+            withContext(Dispatchers.IO) {
+                recordDao?.insertRecord(Record(carId))
+            }
         }
     }
 }

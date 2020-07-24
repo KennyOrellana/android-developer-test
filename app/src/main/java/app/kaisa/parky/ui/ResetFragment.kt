@@ -52,8 +52,14 @@ class ResetFragment : Fragment(){
     }
 
     private fun initUI(){
+        val onClickListener = object : InputsCarAdapter.CarListener {
+            override fun onClick(car: Car) {
+//                carViewModel?.insertRecord(car)
+            }
+        }
+
         recycler_view.layoutManager = LinearLayoutManager(context)
-        adapterInputs = InputsCarAdapter(list)
+        adapterInputs = InputsCarAdapter(list, onClickListener)
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
         recycler_view.adapter = adapterInputs
         carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start

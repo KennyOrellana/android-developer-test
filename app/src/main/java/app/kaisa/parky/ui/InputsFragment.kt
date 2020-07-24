@@ -1,7 +1,6 @@
 package app.kaisa.parky.ui
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,39 +31,35 @@ class InputsFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
-//        initData()
-    }
-
-    private fun initData(){
-        Handler().postDelayed({
-            activity?.runOnUiThread {
-                carViewModel?.addCar(Car("NA1534", 0))
-                carViewModel?.addCar(Car("FA1534", 0))
-                carViewModel?.addCar(Car("HA1534", 0))
-                carViewModel?.addCar(Car("N5432", 1))
-                carViewModel?.addCar(Car("JH33434", 2))
-                carViewModel?.addCar(Car("M5678", 1))
-                carViewModel?.addCar(Car("LK9834", 2))
-                carViewModel?.addCar(Car("jh4242", 1))
-                carViewModel?.addCar(Car("jg424", 2))
-            }
-        }, 1000)
     }
 
     private fun initUI(){
-        recycler_view.layoutManager = LinearLayoutManager(context)
-        adapterInputs = InputsCarAdapter(list)
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
+
+        val onClickListener = object : InputsCarAdapter.CarListener {
+            override fun onClick(car: Car) {
+                carViewModel?.insertRecord(car)
+            }
+        }
+
+        recycler_view.layoutManager = LinearLayoutManager(context)
+        adapterInputs = InputsCarAdapter(list, onClickListener)
+
         recycler_view.adapter = adapterInputs
-        carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
+        carViewModel?.getCarsWithoutInputs()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
         
         //Setup Search
         et_search.addTextChangedListener { query ->
             if(query.isNullOrEmpty()){
-                carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver)
+                carViewModel?.getCarsWithoutInputs()?.observe(viewLifecycleOwner, showCarsObserver)
             } else {
                 carViewModel?.searchCars(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
             }
+        }
+
+        //Add
+        ll_add.setOnClickListener {
+
         }
     }
 
