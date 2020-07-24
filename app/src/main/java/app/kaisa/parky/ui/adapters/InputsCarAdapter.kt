@@ -28,7 +28,7 @@ class InputsCarAdapter(private val list: ArrayList<CarRecord>, private val carLi
     inner class CarViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun bind(item: CarRecord){
             itemView.tv_car_id.text = item.car.idCar.toUpperCase(Locale.ROOT)
-            itemView.tv_minutes.text = DateTime.formatMinutes(item.car.minutes)
+//            itemView.tv_minutes.text = DateTime.formatMinutes(item.car.minutes)
 
             when(item.car.type){
                 0 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_business_outline) //Oficial
