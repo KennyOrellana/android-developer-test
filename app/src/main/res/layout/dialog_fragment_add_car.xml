@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_white">
+
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_normal"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_rounded_primary"
+        android:elevation="@dimen/spacing_half"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/et_add_car"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_half"
+            android:background="@null"
+            android:hint="Placa"
+            android:digits="@string/allowed_chars"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/white80" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_search">
+
+        <RadioButton
+            android:id="@+id/rb_oficial"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Oficial"
+            tools:layout_editor_absoluteX="211dp"
+            tools:layout_editor_absoluteY="75dp" />
+
+        <RadioButton
+            android:id="@+id/rb_resident"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Residente"
+            tools:layout_editor_absoluteX="211dp"
+            tools:layout_editor_absoluteY="75dp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_add"
+        android:enabled="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_normal"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/bg_selector_rounded_primary"
+        android:text="Agregar"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:foreground="?selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_group" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

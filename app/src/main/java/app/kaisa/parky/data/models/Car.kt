@@ -6,6 +6,11 @@ import androidx.room.PrimaryKey
 @Entity
 data class Car(
     @PrimaryKey
-    val id: String,
+    val idCar: String,
     val type: Int,
-    val minutes: Int = 0)
+    var minutes: Int = 0) {
+
+    fun addMinutes(add: Int) {
+        this.minutes += add
+    }
+}

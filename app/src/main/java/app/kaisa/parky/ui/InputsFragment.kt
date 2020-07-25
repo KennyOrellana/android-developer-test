@@ -1,25 +1,28 @@
 package app.kaisa.parky.ui
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.kaisa.parky.R
-import app.kaisa.parky.ui.adapters.CarAdapter
-import app.kaisa.parky.data.models.Car
+import app.kaisa.parky.data.db.ParkyDatabase
+import app.kaisa.parky.ui.adapters.InputsCarAdapter
+import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.viewmodel.CarViewModel
+import app.kaisa.parky.utils.CarListener
 import kotlinx.android.synthetic.main.fragment_inputs.*
 
 class InputsFragment : Fragment(){
     private var carViewModel: CarViewModel? = null
-    private lateinit var adapter: CarAdapter
-    private val list = ArrayList<Car>()
+    private lateinit var adapterInputs: InputsCarAdapter
+    private val list = ArrayList<CarRecord>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,45 +35,56 @@ class InputsFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
-//        initData()
-    }
-
-    private fun initData(){
-        Handler().postDelayed({
-            activity?.runOnUiThread {
-                carViewModel?.addCar(Car("NA1534", 0))
-                carViewModel?.addCar(Car("FA1534", 0))
-                carViewModel?.addCar(Car("HA1534", 0))
-                carViewModel?.addCar(Car("N5432", 1))
-                carViewModel?.addCar(Car("JH33434", 2))
-                carViewModel?.addCar(Car("M5678", 1))
-                carViewModel?.addCar(Car("LK9834", 2))
-                carViewModel?.addCar(Car("jh4242", 1))
-                carViewModel?.addCar(Car("jg424", 2))
-            }
-        }, 1000)
     }
 
     private fun initUI(){
-        recycler_view.layoutManager = LinearLayoutManager(context)
-        adapter = CarAdapter(list)
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
-        recycler_view.adapter = adapter
-        carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
+
+        val onClickListener = object : CarListener {
+            override fun onClick(carRecord: CarRecord) {
+                val bundle = bundleOf(
+                    "car_id" to carRecord.car.idCar,
+                    "car_type" to carRecord.car.type
+                )
+                findNavController().navigate(R.id.add_input_dialog_fragment, bundle)
+            }
+        }
+
+        recycler_view.layoutManager = LinearLayoutManager(context)
+        adapterInputs = InputsCarAdapter(list, onClickListener)
+
+        recycler_view.adapter = adapterInputs
+        carViewModel?.getCarsWithoutInputs()?.observe(viewLifecycleOwner, showCarsObserver) //Show data when start
         
         //Setup Search
         et_search.addTextChangedListener { query ->
             if(query.isNullOrEmpty()){
-                carViewModel?.getCars()?.observe(viewLifecycleOwner, showCarsObserver)
+                ll_add.visibility = View.GONE
+                carViewModel?.getCarsWithoutInputs()?.observe(viewLifecycleOwner, showCarsObserver)
             } else {
-                carViewModel?.searchCars(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
+                tv_add.text = "Registrar entrada de ${et_search.text.toString()} como no residente"
+                ll_add.visibility = View.VISIBLE
+                carViewModel?.searchCarsWithoutInputs(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
             }
+        }
+
+        //Add
+        ll_add.setOnClickListener {
+            ll_add.isEnabled = false
+            val bundle = bundleOf(
+                "car_id" to et_search.text.toString(),
+                "car_type" to ParkyDatabase.CAR_TYPE_NON_RESIDENT
+            )
+            et_search.text.clear()
+            et_search.text.append("")
+            findNavController().navigate(R.id.add_input_dialog_fragment, bundle)
+            ll_add.isEnabled = true
         }
     }
 
-    private val showCarsObserver = Observer<List<Car>> {
+    private val showCarsObserver = Observer<List<CarRecord>> {
         list.clear()
         list.addAll(it)
-        adapter.notifyDataSetChanged()
+        adapterInputs.notifyDataSetChanged()
     }
 }

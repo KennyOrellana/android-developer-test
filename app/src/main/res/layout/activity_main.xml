@@ -28,7 +28,7 @@
         app:iconTint="@color/item_background"
         app:iconTintActive="@color/colorPrimary"
         app:textColor="@color/colorPrimary"
-        app:indicatorColor="@color/colorPrimary80"
+        app:indicatorColor="@color/colorPrimary20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

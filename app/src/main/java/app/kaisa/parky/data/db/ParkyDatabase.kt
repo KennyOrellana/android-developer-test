@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import app.kaisa.parky.data.dao.CarDao
 import app.kaisa.parky.data.dao.CarTypeDao
 import app.kaisa.parky.data.dao.RecordDao
 import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarType
 import app.kaisa.parky.data.models.Record
+import java.util.concurrent.Executors
 
 @Database(
     entities = [Car::class, CarType::class, Record::class],
@@ -31,12 +33,32 @@ abstract class ParkyDatabase : RoomDatabase(){
                     context,
                     ParkyDatabase::class.java,
                     "parky"
-                ).fallbackToDestructiveMigration()
+                )
+                    .fallbackToDestructiveMigration()
+                    .addCallback(object : Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+
+                            Executors.newSingleThreadExecutor().execute {
+                                getDB(context).carTypeDao().insertCarTypes(PREPOPULATE_DATA_CAR_TYPE)
+                            }
+                        }
+                    })
                     .build()
 
                 INSTANCE = instance
                 return instance
             }
         }
+
+        const val CAR_TYPE_OFICIAL = 1;
+        const val CAR_TYPE_RESIDENT = 2;
+        const val CAR_TYPE_NON_RESIDENT = 3;
+
+        private val PREPOPULATE_DATA_CAR_TYPE = listOf(
+            CarType(CAR_TYPE_OFICIAL, "Oficial",0.0),
+            CarType(CAR_TYPE_RESIDENT, "Residente",0.05),
+            CarType(CAR_TYPE_NON_RESIDENT, "Visitante",0.5)
+        )
     }
 }

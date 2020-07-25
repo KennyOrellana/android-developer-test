@@ -8,7 +8,11 @@
     <fragment
         android:id="@+id/inputs_fragment"
         android:name="app.kaisa.parky.ui.InputsFragment"
-        tools:layout="@layout/fragment_inputs" />
+        tools:layout="@layout/fragment_inputs" >
+        <action
+            android:id="@+id/action_inputs_fragment_to_add_input_dialog_fragment"
+            app:destination="@id/add_input_dialog_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/outputs_fragment"
         android:name="app.kaisa.parky.ui.OutputsFragment"
@@ -21,7 +25,32 @@
         tools:layout="@layout/fragment_cars" />
     <fragment
         android:id="@+id/reset_fragment"
-        android:name="app.kaisa.parky.ui.ResetFragment"
+        android:name="app.kaisa.parky.ui.SettingsFragment"
         android:label="Third Fragment"
-        tools:layout="@layout/fragment_reset" />
+        tools:layout="@layout/fragment_settings" />
+
+    <dialog
+        android:id="@+id/add_car_dialog_fragment"
+        android:name="app.kaisa.parky.ui.AddCarDialog"
+        tools:layout="@layout/dialog_fragment_add_car">
+    </dialog>
+
+    <dialog
+        android:id="@+id/add_input_dialog_fragment"
+        android:name="app.kaisa.parky.ui.AddInputDialog"
+        tools:layout="@layout/dialog_fragment_add_input">
+        <argument android:name="car_id" android:defaultValue="@null" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/checkout_dialog_fragment"
+        android:name="app.kaisa.parky.ui.CheckoutDialog"
+        tools:layout="@layout/dialog_fragment_checkout">
+    </dialog>
+
+    <dialog
+        android:id="@+id/checkout_dialog_message"
+        android:name="app.kaisa.parky.ui.MessageDialog"
+        tools:layout="@layout/dialog_fragment_message">
+    </dialog>
 </navigation>

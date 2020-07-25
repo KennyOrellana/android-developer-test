@@ -8,6 +8,7 @@
     <dimen name="spacing_min">4dp</dimen>
 
 <!--    Round UI-->
+    <dimen name="corner_radio_max">32dp</dimen>
     <dimen name="corner_radio_normal">16dp</dimen>
     <dimen name="corner_radio_half">8dp</dimen>
 
