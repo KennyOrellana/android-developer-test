@@ -1,5 +1,6 @@
 package app.kaisa.parky.utils
 
+import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.models.Record
 import app.kaisa.parky.data.repository.CarTypeSingleton
@@ -66,9 +67,13 @@ object DateTime {
     }
 
     fun currentDebt(carRecord: CarRecord) : String {
-        val cost = CarTypeSingleton.getPrice(carRecord.car.type)
+       return currentDebt(carRecord.car)
+    }
+
+    fun currentDebt(car: Car) : String {
+        val cost = CarTypeSingleton.getPrice(car.type)
         return if(cost!=null) {
-            doubleToMoney(carRecord.car.minutes * cost)
+            doubleToMoney(car.minutes * cost)
         } else {
             doubleToMoney(0.0)
         }

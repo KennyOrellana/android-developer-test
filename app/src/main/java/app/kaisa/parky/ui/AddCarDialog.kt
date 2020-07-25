@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import app.kaisa.parky.R
@@ -35,6 +36,10 @@ class AddCarDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
+
+        et_add_car.addTextChangedListener { query ->
+            btn_add.isEnabled = query!=null && query.isNotEmpty()
+        }
 
         btn_add.setOnClickListener {
             val carId = et_add_car.text.toString()

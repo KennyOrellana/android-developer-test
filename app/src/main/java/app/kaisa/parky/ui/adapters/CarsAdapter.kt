@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
-import app.kaisa.parky.data.db.ParkyDatabase
 import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_NON_RESIDENT
 import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_OFICIAL
 import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_RESIDENT
 import app.kaisa.parky.data.models.Car
-import kotlinx.android.synthetic.main.item_inputs_car.view.*
+import app.kaisa.parky.data.repository.CarTypeSingleton
+import app.kaisa.parky.utils.DateTime
+import kotlinx.android.synthetic.main.item_cars.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,6 +31,16 @@ class CarsAdapter(private val list: ArrayList<Car>) : RecyclerView.Adapter<CarsA
     inner class CarViewHolder(view: View) : RecyclerView.ViewHolder(view){
         fun bind(car: Car){
             itemView.tv_car_id.text = car.idCar.toUpperCase(Locale.ROOT)
+
+            val cost = CarTypeSingleton.getPrice(car.type)
+            if(cost!=null) {
+                itemView.tv_value_1.text = DateTime.formatMinutes(car.minutes)
+            } else {
+                itemView.tv_value_1.text = ""
+            }
+
+            itemView.tv_value_2.text = "Saldo Pendiente"
+            itemView.tv_value_3.text = DateTime.currentDebt(car)
 
             when(car.type){
                 CAR_TYPE_OFICIAL -> itemView.iv_car_icon.setImageResource(R.drawable.ic_business_outline)

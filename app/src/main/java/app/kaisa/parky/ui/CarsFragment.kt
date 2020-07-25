@@ -17,7 +17,6 @@ import app.kaisa.parky.data.models.CarType
 import app.kaisa.parky.data.viewmodel.CarViewModel
 import app.kaisa.parky.ui.adapters.CarsAdapter
 import app.kaisa.parky.ui.adapters.FiltersAdapter
-import app.kaisa.parky.ui.utils.VerticalDivider
 import kotlinx.android.synthetic.main.fragment_cars.*
 import kotlinx.android.synthetic.main.fragment_cars.et_search
 import kotlinx.android.synthetic.main.fragment_cars.recycler_view
@@ -46,7 +45,6 @@ class CarsFragment : Fragment(){
     private fun initUI(){
         //Cars RecyclerView
         recycler_view.layoutManager = LinearLayoutManager(context)
-        recycler_view.addItemDecoration(VerticalDivider(context))
         adapterInputs = CarsAdapter(listCars)
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
         recycler_view.adapter = adapterInputs
