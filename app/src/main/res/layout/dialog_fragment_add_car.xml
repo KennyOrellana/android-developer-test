@@ -28,6 +28,8 @@
             android:layout_marginLeft="@dimen/spacing_half"
             android:background="@null"
             android:hint="Placa"
+            android:digits="@string/allowed_chars"
+            android:maxLines="1"
             android:textColor="@android:color/white"
             android:textColorHint="@color/white80" />
     </LinearLayout>

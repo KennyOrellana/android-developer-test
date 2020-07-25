@@ -19,6 +19,8 @@ import app.kaisa.parky.ui.adapters.CarsAdapter
 import app.kaisa.parky.ui.adapters.FiltersAdapter
 import app.kaisa.parky.ui.utils.VerticalDivider
 import kotlinx.android.synthetic.main.fragment_cars.*
+import kotlinx.android.synthetic.main.fragment_cars.et_search
+import kotlinx.android.synthetic.main.fragment_cars.recycler_view
 
 
 class CarsFragment : Fragment(){
@@ -89,6 +91,13 @@ class CarsFragment : Fragment(){
     private val showCarsObserver = Observer<List<Car>> {
         listCars.clear()
         listCars.addAll(it)
+
+        recycler_view.visibility = if(listCars.isEmpty()){
+            View.INVISIBLE
+        } else {
+            View.VISIBLE
+        }
+
         adapterInputs.notifyDataSetChanged()
     }
 }

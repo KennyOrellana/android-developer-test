@@ -57,6 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_half"
             android:background="@null"
+            android:digits="@string/allowed_chars"
+            android:maxLines="1"
             android:hint="@string/search" />
     </LinearLayout>
 
