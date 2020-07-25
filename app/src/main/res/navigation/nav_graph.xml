@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/car_fragment">
+    app:startDestination="@id/inputs_fragment">
 
     <fragment
         android:id="@+id/inputs_fragment"
         android:name="app.kaisa.parky.ui.InputsFragment"
-        tools:layout="@layout/fragment_inputs" />
+        tools:layout="@layout/fragment_inputs" >
+        <action
+            android:id="@+id/action_inputs_fragment_to_add_input_dialog_fragment"
+            app:destination="@id/add_input_dialog_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/outputs_fragment"
         android:name="app.kaisa.parky.ui.OutputsFragment"
@@ -29,8 +33,12 @@
         android:id="@+id/add_car_dialog_fragment"
         android:name="app.kaisa.parky.ui.AddCarDialog"
         tools:layout="@layout/dialog_fragment_add_car">
-<!--        <action-->
-<!--            android:id="@+id/add_car"-->
-<!--            app:destination="@+id/another_destination"/>-->
+    </dialog>
+
+    <dialog
+        android:id="@+id/add_input_dialog_fragment"
+        android:name="app.kaisa.parky.ui.AddInputDialog"
+        tools:layout="@layout/dialog_fragment_add_input">
+        <argument android:name="car_id" android:defaultValue="@null" />
     </dialog>
 </navigation>

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -25,6 +26,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/spacing_normal"
         android:elevation="@dimen/spacing_normal"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title">
@@ -48,6 +50,7 @@
 
     <LinearLayout
         android:id="@+id/ll_add"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_normal"

@@ -5,6 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
+import app.kaisa.parky.data.db.ParkyDatabase
+import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_NON_RESIDENT
+import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_OFICIAL
+import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_RESIDENT
 import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.repository.CarTypeSingleton
 import app.kaisa.parky.utils.CarListener
@@ -33,18 +37,24 @@ class InputsCarAdapter(private val list: ArrayList<CarRecord>, private val carLi
             val cost = CarTypeSingleton.getPrice(item.car.type)
             if(cost!=null) {
                 itemView.tv_value_1.text = DateTime.formatMinutes(item.car.minutes)
+            } else {
+                itemView.tv_value_1.text = ""
             }
+
             itemView.tv_value_2.text = "Saldo Pendiente"
             itemView.tv_value_3.text = DateTime.currentDebt(item)
 
             when(item.car.type){
-                1 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_business_outline) //Oficial
-                2 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_home_outline) //Residentes
-                3 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_people_outline) //Visitantes
+                CAR_TYPE_OFICIAL -> itemView.iv_car_icon.setImageResource(R.drawable.ic_business_outline)
+                CAR_TYPE_RESIDENT -> itemView.iv_car_icon.setImageResource(R.drawable.ic_home_outline)
+                CAR_TYPE_NON_RESIDENT -> itemView.iv_car_icon.setImageResource(R.drawable.ic_people_outline)
                 else -> itemView.iv_car_icon.setImageResource(R.drawable.ic_help_circle_outline) //Otros
             }
 
+            itemView.isEnabled = true //Reset clickable
+
             itemView.setOnClickListener{
+                it.isEnabled = false
                 carListener.onClick(item)
             }
         }

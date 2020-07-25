@@ -65,10 +65,10 @@ object DateTime {
 
     fun currentDebt(carRecord: CarRecord) : String {
         val cost = CarTypeSingleton.getPrice(carRecord.car.type)
-        if(cost!=null) {
-            return doubleToMoney(carRecord.car.minutes * cost)
+        return if(cost!=null) {
+            doubleToMoney(carRecord.car.minutes * cost)
+        } else {
+            doubleToMoney(0.0)
         }
-
-        return ""
     }
 }

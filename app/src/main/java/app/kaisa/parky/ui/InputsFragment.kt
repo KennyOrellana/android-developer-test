@@ -4,12 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.core.text.set
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.kaisa.parky.R
+import app.kaisa.parky.data.db.ParkyDatabase
+import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_NON_RESIDENT
 import app.kaisa.parky.ui.adapters.InputsCarAdapter
 import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
@@ -53,15 +59,23 @@ class InputsFragment : Fragment(){
         //Setup Search
         et_search.addTextChangedListener { query ->
             if(query.isNullOrEmpty()){
+                ll_add.visibility = View.GONE
                 carViewModel?.getCarsWithoutInputs()?.observe(viewLifecycleOwner, showCarsObserver)
             } else {
+                tv_add.text = "Registrar entrada de ${et_search.text.toString()} como no residente"
+                ll_add.visibility = View.VISIBLE
                 carViewModel?.searchCarsWithoutInputs(query.toString())?.observe(viewLifecycleOwner, showCarsObserver)
             }
         }
 
         //Add
         ll_add.setOnClickListener {
-
+            ll_add.isEnabled = false
+            val bundle = bundleOf("car_id" to et_search.text.toString())
+            et_search.text.clear()
+            et_search.text.append("")
+            findNavController().navigate(R.id.add_input_dialog_fragment, bundle)
+            ll_add.isEnabled = true
         }
     }
 

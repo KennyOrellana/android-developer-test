@@ -5,6 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
+import app.kaisa.parky.data.db.ParkyDatabase
+import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_NON_RESIDENT
+import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_OFICIAL
+import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_RESIDENT
 import app.kaisa.parky.data.models.Car
 import kotlinx.android.synthetic.main.item_inputs_car.view.*
 import java.util.*
@@ -28,9 +32,9 @@ class CarsAdapter(private val list: ArrayList<Car>) : RecyclerView.Adapter<CarsA
             itemView.tv_car_id.text = car.idCar.toUpperCase(Locale.ROOT)
 
             when(car.type){
-                1 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_business_outline) //Oficial
-                2 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_home_outline) //Residentes
-                3 -> itemView.iv_car_icon.setImageResource(R.drawable.ic_people_outline) //Visitantes
+                CAR_TYPE_OFICIAL -> itemView.iv_car_icon.setImageResource(R.drawable.ic_business_outline)
+                CAR_TYPE_RESIDENT -> itemView.iv_car_icon.setImageResource(R.drawable.ic_home_outline)
+                CAR_TYPE_NON_RESIDENT -> itemView.iv_car_icon.setImageResource(R.drawable.ic_people_outline)
                 else -> itemView.iv_car_icon.setImageResource(R.drawable.ic_help_circle_outline) //Otros
             }
         }
