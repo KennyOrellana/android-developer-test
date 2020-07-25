@@ -27,7 +27,7 @@ interface CarDao {
     @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.idCar = record.carId WHERE record.dateOutput IS NULL ORDER BY car.idCar ASC")
     fun getCarsWithInputs() : LiveData<List<CarRecord>>
 
-    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.carId WHERE (record.carId IS NULL OR record.dateOutput IS NOT NULL) ORDER BY car.idCar ASC")
+    @Query("SELECT car.idCar, car.minutes, car.type, r.idRecord, r.carId, r.dateInput, r.dateOutput FROM car LEFT JOIN (SELECT * FROM record WHERE record.dateOutput IS NULL) AS r ON car.idCar = r.carId WHERE r.carId IS NULL ORDER BY car.idCar ASC")
     fun getCarsWithoutInputs() : LiveData<List<CarRecord>>
 
     //Search WITH Inputs (Car will exit)
@@ -50,7 +50,7 @@ interface CarDao {
     fun searchCarsWithInputs(plate: String, type: List<Int>) : LiveData<List<CarRecord>>
 
     //Search WITHOUT Inputs (Car will enter)
-    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.carId WHERE ((record.carId IS NULL OR record.dateOutput IS NOT NULL) AND idCar LIKE :plate || '%') ORDER BY car.idCar ASC")
+    @Query("SELECT car.idCar, car.minutes, car.type, r.idRecord, r.carId, r.dateInput, r.dateOutput FROM car LEFT JOIN (SELECT * FROM record WHERE record.dateOutput IS NULL) AS r ON car.idCar = r.carId WHERE (r.carId IS NULL AND idCar LIKE :plate || '%') ORDER BY car.idCar ASC")
     fun searchCarsWithoutInputs(plate: String) : LiveData<List<CarRecord>>
 
     @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.carId WHERE ((record.carId IS NULL OR record.dateOutput IS NOT NULL) AND type IN (:type)) ORDER BY car.idCar ASC")
