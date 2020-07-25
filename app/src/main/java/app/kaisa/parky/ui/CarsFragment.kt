@@ -8,6 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
@@ -77,6 +78,11 @@ class CarsFragment : Fragment(){
                     listFilters.filter { it.isChecked }
                 )?.observe(viewLifecycleOwner, showCarsObserver)
             }
+        }
+
+        //Add Car
+        iv_add_car.setOnClickListener {
+            findNavController().navigate(R.id.add_car_dialog_fragment)
         }
     }
 

@@ -8,12 +8,26 @@
     <TextView
         android:id="@+id/tv_title"
         style="@style/MainTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_cars"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_add_car"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="2dp"
+        android:clickable="true"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:background="@drawable/bg_circle_white"
+        android:src="@drawable/ic_add_outline"
+        android:tint="@color/colorAccent"
+        android:elevation="@dimen/spacing_half"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
     <LinearLayout
         android:id="@+id/ll_search"
@@ -79,7 +93,7 @@
         android:clipToPadding="false"
         android:paddingVertical="@dimen/spacing_half"
         android:paddingTop="16dp"
-        android:background="@drawable/bg_rounded_white"
+        android:background="@drawable/bg_rounded_white90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_add"
         app:layout_constraintVertical_bias="0.0" />

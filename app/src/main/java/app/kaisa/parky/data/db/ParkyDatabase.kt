@@ -54,8 +54,7 @@ abstract class ParkyDatabase : RoomDatabase(){
 
         private val PREPOPULATE_DATA_CAR_TYPE = listOf(
             CarType(1, "Oficial",0.0),
-            CarType(2, "Residente",0.05),
-            CarType(3, "Visitante",0.5)
+            CarType(2, "Residente",0.05)
         )
 
         private val PREPOPULATE_DATA_CAR = listOf(

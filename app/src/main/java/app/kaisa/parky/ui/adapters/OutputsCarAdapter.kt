@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
-import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.utils.CarListener
 import app.kaisa.parky.utils.DateTime
