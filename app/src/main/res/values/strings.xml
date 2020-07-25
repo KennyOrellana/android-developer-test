@@ -9,5 +9,5 @@
     <string name="search">Buscar</string>
     <string name="register_non_resident">Registrar entrada de no residente</string>
 
-    <string name="allowed_chars">abcdefghijklmnñopqrstuvwxyz0123456789</string>
+    <string name="allowed_chars">abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789</string>
 </resources>
