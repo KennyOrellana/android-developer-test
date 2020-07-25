@@ -25,9 +25,9 @@
         tools:layout="@layout/fragment_cars" />
     <fragment
         android:id="@+id/reset_fragment"
-        android:name="app.kaisa.parky.ui.ResetFragment"
+        android:name="app.kaisa.parky.ui.SettingsFragment"
         android:label="Third Fragment"
-        tools:layout="@layout/fragment_reset" />
+        tools:layout="@layout/fragment_settings" />
 
     <dialog
         android:id="@+id/add_car_dialog_fragment"
@@ -46,5 +46,11 @@
         android:id="@+id/checkout_dialog_fragment"
         android:name="app.kaisa.parky.ui.CheckoutDialog"
         tools:layout="@layout/dialog_fragment_checkout">
+    </dialog>
+
+    <dialog
+        android:id="@+id/checkout_dialog_message"
+        android:name="app.kaisa.parky.ui.MessageDialog"
+        tools:layout="@layout/dialog_fragment_message">
     </dialog>
 </navigation>

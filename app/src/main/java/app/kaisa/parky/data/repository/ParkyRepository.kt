@@ -133,6 +133,14 @@ class ParkyRepository (application: Application) : CoroutineScope {
         }
     }
 
+    fun deleteRecordsOfficial() {
+        launch {
+            withContext(Dispatchers.IO) {
+                recordDao?.deleteRecordsOfficial()
+            }
+        }
+    }
+
     fun updateRecord(record: Record) {
         recordDao?.updateRecord(record)
     }

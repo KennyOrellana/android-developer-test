@@ -30,6 +30,7 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
 
     //Records
     fun insertRecord(car: Car) = repository.insertRecord(car.idCar)
+    fun deleteRecordsOfficial() = repository.deleteRecordsOfficial()
 
     //Checkout
     fun checkoutCar(carRecord: CarRecord) = repository.checkoutCar(carRecord)
