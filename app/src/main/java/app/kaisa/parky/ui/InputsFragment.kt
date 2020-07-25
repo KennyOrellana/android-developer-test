@@ -5,19 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.text.set
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.kaisa.parky.R
 import app.kaisa.parky.data.db.ParkyDatabase
-import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_NON_RESIDENT
 import app.kaisa.parky.ui.adapters.InputsCarAdapter
-import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.viewmodel.CarViewModel
 import app.kaisa.parky.utils.CarListener
@@ -46,7 +42,11 @@ class InputsFragment : Fragment(){
 
         val onClickListener = object : CarListener {
             override fun onClick(carRecord: CarRecord) {
-                carViewModel?.insertRecord(carRecord.car)
+                val bundle = bundleOf(
+                    "car_id" to carRecord.car.idCar,
+                    "car_type" to carRecord.car.type
+                )
+                findNavController().navigate(R.id.add_input_dialog_fragment, bundle)
             }
         }
 
@@ -71,7 +71,10 @@ class InputsFragment : Fragment(){
         //Add
         ll_add.setOnClickListener {
             ll_add.isEnabled = false
-            val bundle = bundleOf("car_id" to et_search.text.toString())
+            val bundle = bundleOf(
+                "car_id" to et_search.text.toString(),
+                "car_type" to ParkyDatabase.CAR_TYPE_NON_RESIDENT
+            )
             et_search.text.clear()
             et_search.text.append("")
             findNavController().navigate(R.id.add_input_dialog_fragment, bundle)

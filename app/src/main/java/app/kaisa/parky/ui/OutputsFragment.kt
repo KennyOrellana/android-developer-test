@@ -4,18 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.kaisa.parky.R
-import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.viewmodel.CarViewModel
 import app.kaisa.parky.ui.adapters.OutputsCarAdapter
 import app.kaisa.parky.utils.CarListener
-import kotlinx.android.synthetic.main.fragment_outputs.*
+import kotlinx.android.synthetic.main.fragment_outputs.et_search
+import kotlinx.android.synthetic.main.fragment_outputs.recycler_view
 
 class OutputsFragment : Fragment(){
     private var carViewModel: CarViewModel? = null
@@ -38,7 +40,14 @@ class OutputsFragment : Fragment(){
     private fun initUI(){
         val onClickListener = object : CarListener {
             override fun onClick(carRecord: CarRecord) {
-                carViewModel?.checkoutCar(carRecord)
+                val bundle = bundleOf(
+                    "car_id" to carRecord.car.idCar,
+                    "car_type" to carRecord.car.type,
+                    "cminutes" to carRecord.car.minutes,
+                    "date_id" to carRecord.record?.idRecord,
+                    "date_input" to carRecord.record?.dateInput
+                )
+                findNavController().navigate(R.id.checkout_dialog_fragment, bundle)
             }
         }
 

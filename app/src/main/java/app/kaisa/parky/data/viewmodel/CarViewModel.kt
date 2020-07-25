@@ -22,6 +22,7 @@ class CarViewModel(application: Application) : AndroidViewModel(application) {
     fun searchCarsWithoutInputs(plate: String? = null, filters: List<CarType>? = null) = repository.searchCarsWithoutInputs(plate, filters)
 
     fun addCar(car: Car) { repository.addCar(car) }
+    fun deleteCar(car: Car) { repository.deleteCar(car) }
 
     //Car Type
     fun getCarTypes() = repository.getCarTypes()

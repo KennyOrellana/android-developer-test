@@ -12,11 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import app.kaisa.parky.R
 import app.kaisa.parky.data.db.ParkyDatabase
 import app.kaisa.parky.data.models.Car
+import app.kaisa.parky.data.models.CarRecord
+import app.kaisa.parky.data.models.Record
 import app.kaisa.parky.data.viewmodel.CarViewModel
-import kotlinx.android.synthetic.main.dialog_fragment_add_input.*
+import kotlinx.android.synthetic.main.dialog_fragment_checkout.*
 
 
-class AddInputDialog : DialogFragment() {
+class CheckoutDialog : DialogFragment() {
     private var carViewModel: CarViewModel? = null
 
     override fun onCreateView(
@@ -24,7 +26,7 @@ class AddInputDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.dialog_fragment_add_input, container, false)
+        val view: View = inflater.inflate(R.layout.dialog_fragment_checkout, container, false)
         if (dialog != null && dialog!!.window != null) {
             dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE)
@@ -37,23 +39,24 @@ class AddInputDialog : DialogFragment() {
 
         val carId = arguments?.getString("car_id") ?: ""
         val carType = arguments?.getInt("car_type") ?: 0
-
-        add_input_message.text ="Registrar entrada de ${carId}?"
+        val minutes = arguments?.getInt("minutes") ?: 0
+        val dateId = arguments?.getInt("date_id") ?: 0
+        val dateInput = arguments?.getLong("date_input") ?: 0
+        val car = Car(carId, carType, minutes)
+        val carRecord = CarRecord(car, Record(dateId, carId, dateInput, null))
+        add_input_message.text ="Registrar salida de ${carId}?"
 
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
 
-        btn_dismiss.setOnClickListener { dismiss() }
-
         btn_add_input.setOnClickListener {
             it.isEnabled = false
-
-            val car = Car(carId, ParkyDatabase.CAR_TYPE_NON_RESIDENT)
+            carViewModel?.checkoutCar(carRecord)
             if(carType != ParkyDatabase.CAR_TYPE_OFICIAL && carType != ParkyDatabase.CAR_TYPE_RESIDENT) {
-                carViewModel?.addCar(car)
+                carViewModel?.deleteCar(car)
             }
-            carViewModel?.insertRecord(car)
-
             dismiss()
         }
+
+        btn_dismiss.setOnClickListener { dismiss() }
     }
 }

@@ -41,4 +41,10 @@
         tools:layout="@layout/dialog_fragment_add_input">
         <argument android:name="car_id" android:defaultValue="@null" />
     </dialog>
+
+    <dialog
+        android:id="@+id/checkout_dialog_fragment"
+        android:name="app.kaisa.parky.ui.CheckoutDialog"
+        tools:layout="@layout/dialog_fragment_checkout">
+    </dialog>
 </navigation>

@@ -1,7 +1,6 @@
 package app.kaisa.parky.data.repository
 
 import android.app.Application
-import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
 import app.kaisa.parky.data.dao.CarDao
 import app.kaisa.parky.data.dao.CarTypeDao
@@ -36,6 +35,15 @@ class ParkyRepository (application: Application) : CoroutineScope {
 
     //Cars
     fun updateCars(car: Car) = carDao?.updateCar(car)
+
+    fun deleteCar(car: Car){
+        launch {
+            withContext(Dispatchers.IO) {
+                carDao?.deleteCar(car)
+            }
+        }
+    }
+
     fun getCars() = carDao?.getCars()
     fun getCarsWithInputs() = carDao?.getCarsWithInputs()
     fun getCarsWithoutInputs() = carDao?.getCarsWithoutInputs()

@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
-import app.kaisa.parky.data.db.ParkyDatabase
 import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_NON_RESIDENT
 import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_OFICIAL
 import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_RESIDENT
@@ -51,11 +50,10 @@ class InputsCarAdapter(private val list: ArrayList<CarRecord>, private val carLi
                 else -> itemView.iv_car_icon.setImageResource(R.drawable.ic_help_circle_outline) //Otros
             }
 
-            itemView.isEnabled = true //Reset clickable
-
             itemView.setOnClickListener{
                 it.isEnabled = false
                 carListener.onClick(item)
+                it.isEnabled = true
             }
         }
     }

@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import app.kaisa.parky.R
-import app.kaisa.parky.data.db.ParkyDatabase
 import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_NON_RESIDENT
 import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_OFICIAL
 import app.kaisa.parky.data.db.ParkyDatabase.Companion.CAR_TYPE_RESIDENT
