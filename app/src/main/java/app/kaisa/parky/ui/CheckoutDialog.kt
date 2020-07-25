@@ -15,6 +15,7 @@ import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.models.Record
 import app.kaisa.parky.data.viewmodel.CarViewModel
+import app.kaisa.parky.utils.DateTime
 import kotlinx.android.synthetic.main.dialog_fragment_checkout.*
 
 
@@ -44,7 +45,14 @@ class CheckoutDialog : DialogFragment() {
         val dateInput = arguments?.getLong("date_input") ?: 0
         val car = Car(carId, carType, minutes)
         val carRecord = CarRecord(car, Record(dateId, carId, dateInput, null))
-        add_input_message.text ="Registrar salida de ${carId}?"
+
+        var message = "Registrar salida de ${carId}?"
+
+        if(carType == ParkyDatabase.CAR_TYPE_NON_RESIDENT) {
+            message += "\n \n Total a pagar ${DateTime.calculateAmount(carRecord)} \n"
+        }
+
+        add_input_message.text = message
 
         carViewModel = ViewModelProvider(this).get(CarViewModel::class.java)
 
