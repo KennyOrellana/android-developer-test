@@ -47,4 +47,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_reset" />
+
+    <Button
+        android:id="@+id/btn_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/bg_rounded_primary"
+        android:text="Agregar Datos de Prueba"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:foreground="?selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_pay" />
 </androidx.constraintlayout.widget.ConstraintLayout>

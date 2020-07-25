@@ -67,47 +67,26 @@ class ParkyRepository (application: Application) : CoroutineScope {
         }
     }
 
-    fun searchCarsWithInputs(plate: String? = null, filters: List<CarType>? = null) : LiveData<List<CarRecord>>? {
-        return when {
-            plate?.isNotEmpty() == true && filters != null -> {
-                carDao?.searchCarsWithInputs(plate, filters.map { it.idType })
-            }
-
-            plate?.isNotEmpty() == true -> {
-                return carDao?.searchCarsWithInputs(plate)
-            }
-
-            filters != null -> {
-                carDao?.searchCarsWithInputs(filters.map { it.idType })
-            }
-
-            else -> null
-        }
+    fun searchCarsWithInputs(plate: String) : LiveData<List<CarRecord>>? {
+         return carDao?.searchCarsWithInputs(plate)
     }
 
-    fun searchCarsWithoutInputs(plate: String? = null, filters: List<CarType>? = null) : LiveData<List<CarRecord>>? {
-        return when {
-            plate?.isNotEmpty() == true && filters != null -> {
-                carDao?.searchCarsWithoutInputs(plate, filters.map { it.idType })
-            }
-
-            plate?.isNotEmpty() == true -> {
-                return carDao?.searchCarsWithoutInputs(plate)
-            }
-
-            filters != null -> {
-                carDao?.searchCarsWithoutInputs(filters.map { it.idType })
-            }
-
-            else -> null
-        }
+    fun searchCarsWithoutInputs(plate: String) : LiveData<List<CarRecord>>? {
+        return carDao?.searchCarsWithoutInputs(plate)
     }
 
     fun addCar(car: Car){
         launch { addCarBG(car) }
     }
 
-    //TODO understand why is implemented in this way
+    fun addCars(cars: List<Car>){
+        launch {
+            withContext(Dispatchers.IO){
+                carDao?.insertCars(cars)
+            }
+        }
+    }
+
     private suspend fun addCarBG(car: Car){
         withContext(Dispatchers.IO){
             carDao?.insertCar(car)

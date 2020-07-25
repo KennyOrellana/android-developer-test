@@ -43,20 +43,7 @@ interface CarDao {
     @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.idCar = record.carId WHERE (idCar LIKE :plate || '%' AND record.dateOutput IS NULL) ORDER BY car.idCar ASC")
     fun searchCarsWithInputs(plate: String) : LiveData<List<CarRecord>>
 
-    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.idCar = record.carId WHERE (type IN (:type) AND record.dateOutput IS NULL) ORDER BY car.idCar ASC")
-    fun searchCarsWithInputs(type: List<Int>) : LiveData<List<CarRecord>>
-
-    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car INNER JOIN record ON car.idCar = record.carId WHERE (idCar LIKE :plate || '%' AND type IN (:type) AND record.dateOutput IS NULL) ORDER BY car.idCar ASC")
-    fun searchCarsWithInputs(plate: String, type: List<Int>) : LiveData<List<CarRecord>>
-
     //Search WITHOUT Inputs (Car will enter)
     @Query("SELECT car.idCar, car.minutes, car.type, r.idRecord, r.carId, r.dateInput, r.dateOutput FROM car LEFT JOIN (SELECT * FROM record WHERE record.dateOutput IS NULL) AS r ON car.idCar = r.carId WHERE (r.carId IS NULL AND idCar LIKE :plate || '%') ORDER BY car.idCar ASC")
     fun searchCarsWithoutInputs(plate: String) : LiveData<List<CarRecord>>
-
-    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.carId WHERE ((record.carId IS NULL OR record.dateOutput IS NOT NULL) AND type IN (:type)) ORDER BY car.idCar ASC")
-    fun searchCarsWithoutInputs(type: List<Int>) : LiveData<List<CarRecord>>
-
-    @Query("SELECT car.idCar, car.minutes, car.type, record.idRecord, record.carId, record.dateInput, record.dateOutput FROM car LEFT JOIN record ON car.idCar = record.carId WHERE ((record.carId IS NULL OR record.dateOutput IS NOT NULL) AND idCar LIKE :plate || '%' AND type IN (:type)) ORDER BY car.idCar ASC")
-    fun searchCarsWithoutInputs(plate: String, type: List<Int>) : LiveData<List<CarRecord>>
-
 }

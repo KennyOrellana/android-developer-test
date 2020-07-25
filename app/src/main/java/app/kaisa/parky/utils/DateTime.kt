@@ -3,11 +3,13 @@ package app.kaisa.parky.utils
 import app.kaisa.parky.data.models.CarRecord
 import app.kaisa.parky.data.models.Record
 import app.kaisa.parky.data.repository.CarTypeSingleton
-import java.text.DateFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 object DateTime {
+    private const val DATE_FORMAT = "dd/MM/yy hh:mm a"
+
     fun formatMinutes(time: Int) : String {
         val hours: Int = time / 60
         val minutes: Int = time % 60
@@ -20,18 +22,18 @@ object DateTime {
         }
     }
 
-    fun doubleToMoney(amount: Double) : String {
+    private fun doubleToMoney(amount: Double) : String {
         return NumberFormat.getCurrencyInstance(Locale.US).format(amount)
     }
 
-    fun millisToMinutes(millis: Long) : Int {
-        return (millis / 60000.0).toInt()
+    private fun millisToMinutes(millis: Long) : Int {
+        return (millis / 60_000.0).toInt()
     }
 
     fun millisToDate(carRecord: CarRecord) : String {
         carRecord.record?.dateInput?.let {
             if(it > 0) {
-                return DateFormat.getDateInstance(DateFormat.SHORT).format(Date(it))
+                return SimpleDateFormat(DATE_FORMAT, Locale.US).format(Date(it))
             }
         }
 

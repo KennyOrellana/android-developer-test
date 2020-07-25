@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import app.kaisa.parky.R
+import app.kaisa.parky.data.models.Car
 import app.kaisa.parky.data.viewmodel.CarViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 
@@ -43,5 +44,25 @@ class SettingsFragment : Fragment(){
             )
             findNavController().navigate(R.id.checkout_dialog_message, bundle)
         }
+
+        btn_data.setOnClickListener {
+            carViewModel?.addCars(PREPOPULATE_DATA_CAR)
+        }
+    }
+
+    companion object {
+        val PREPOPULATE_DATA_CAR = listOf(
+            Car("M9876", 1),
+            Car("FAA1234", 2),
+            Car("HA3421", 1),
+            Car("SDK5432", 2),
+            Car("MHB5678", 2),
+            Car("JDK9876", 1),
+            Car("KLA1234", 2),
+            Car("MMA3421", 1),
+            Car("LKO5432", 2),
+            Car("ADK5678", 2),
+            Car("LKJ9834", 1)
+        )
     }
 }

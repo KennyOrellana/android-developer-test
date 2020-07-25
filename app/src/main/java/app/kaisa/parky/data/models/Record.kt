@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Record(
     @PrimaryKey(autoGenerate = true)
     val idRecord: Int,
-    val carId: String, //TODO this should be Car
+    val carId: String,
     val dateInput: Long,
     var dateOutput: Long?) {
 
